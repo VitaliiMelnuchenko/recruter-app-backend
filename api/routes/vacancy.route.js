@@ -4,20 +4,12 @@ const vacancyController = require('../controllers/vacancy.controller');
 
 router.get('/', vacancyController.getVacancies);
 
-router.post('/', (req, res, next) => {
-    res.send('vacancy created');
-});
+router.post('/', vacancyController.createVacancy);
 
-router.get('/:vacancyId', (req, res, next) => {
-   res.send('vacancy: ' + req.params.vacancyId);
-});
+router.get('/:vacancyId', vacancyController.getVacancyById);
 
-router.put('/:vacancyId', (req, res, next) => {
-   res.send(req.params.vacancyId + ' vacancy updated');
-});
+router.put('/:vacancyId', vacancyController.updateVacancy);
 
-router.delete('/:vacancyId', (req, res, next) => {
-    res.send(req.params.vacancyId + ' vacancy deleted');
-});
+router.delete('/:vacancyId', vacancyController.deleteVacancy);
 
 module.exports = router;

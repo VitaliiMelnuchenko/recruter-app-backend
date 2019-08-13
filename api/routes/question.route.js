@@ -6,12 +6,10 @@ router.get('/', questionController.getQestions);
 
 router.post('/', questionController.createQuestion);
 
-router.get('/:questionId', questionController.getQestionById);
+router.get('/:questionId', questionController.getQuestionById);
 
 router.put('/:questionId', questionController.updateQuestion);
 
-router.delete('/:questionId', (req, res, next) => {
-    res.send(req.params.questionID + ' question deleted');
-});
+router.delete('/:questionId', questionController.deleteQuestion);
 
 module.exports = router;
