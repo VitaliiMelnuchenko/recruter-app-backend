@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const usersRoutes = require('./user.route')
 const vacanciesRoutes = require('./vacancy.route');
 const questionsRoutes = require('./question.route');
 
@@ -8,6 +9,7 @@ router.get('/', (req, res, next) => {
     res.send('success');
 });
 
+router.use('/users', usersRoutes);
 router.use('/vacancies', vacanciesRoutes);
 router.use('/questions', questionsRoutes);
 

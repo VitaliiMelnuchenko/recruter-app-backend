@@ -3,13 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c7db678a-338d-4cf0-b546-6fb072f7b331" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/controllers/question.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/controllers/question.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/controllers/vacancy.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/controllers/vacancy.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/models/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/models/question.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/models/question.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/models/vacancy.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/models/vacancy.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/routes/question.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/question.route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/routes/vacancy.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/vacancy.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/models/user.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/models/user.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes/user.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/user.route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
@@ -54,7 +50,7 @@
       <option name="presentableId" value="Default" />
       <updated>1565611837365</updated>
       <workItem from="1565611838688" duration="9247000" />
-      <workItem from="1565676877346" duration="10665000" />
+      <workItem from="1565676877346" duration="16652000" />
     </task>
     <servers />
   </component>

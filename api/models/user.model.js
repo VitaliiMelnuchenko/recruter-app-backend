@@ -7,9 +7,10 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
-        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+        index: true
     },
-    role: { type: String, enum: ['admin', 'recruiter', 'reviewer', 'candidate'], required: true},
+    role: { type: String, enum: ['admin', 'recruiter', 'reviewer', 'candidate'], default: 'candidate', required: true},
     isActive: { type: Boolean, default: false }
 });
 
