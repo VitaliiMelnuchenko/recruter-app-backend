@@ -15,4 +15,14 @@ const QestionSchema = new Schema({
     level: { type: String, required: true },
 });
 
+QestionSchema.pre('remove', { query: true }, function() {
+    console.log('test');
+    Vacancy.update(
+        { },
+        { $pull: { questions: this._id } }
+    ).exec()
+        .then(() => next())
+        .catch(err => next(err));
+});
+
 module.exports = mongoose.model('Question', QestionSchema);

@@ -1,3 +1,4 @@
 const Question = require('./question.model');
+const Vacancy = require('./vacancy.model');
 
-module.exports = { Question }
+module.exports = { Question, Vacancy }
