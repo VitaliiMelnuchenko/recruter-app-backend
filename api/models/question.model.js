@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Vacancy = require('./vacancy.model');
 
-const QestionSchema = new Schema({
+const QuestionSchema = new Schema({
     // author: {
     //      type: Schema.Types.ObjectId,
     //      ref: 'User'
@@ -15,14 +16,16 @@ const QestionSchema = new Schema({
     level: { type: String, required: true },
 });
 
-QestionSchema.pre('remove', { query: true }, function() {
-    console.log('test');
-    Vacancy.update(
-        { },
-        { $pull: { questions: this._id } }
-    ).exec()
-        .then(() => next())
-        .catch(err => next(err));
+QuestionSchema.pre('remove', async function(next) {
+    try {
+        await Vacancy.update(
+            { },
+            { $pull: { questions: this._id } }
+        ).exec();
+        next();
+    } catch(err) {
+        next(err)
+    }
 });
 
-module.exports = mongoose.model('Question', QestionSchema);
+module.exports = mongoose.model('Question', QuestionSchema);

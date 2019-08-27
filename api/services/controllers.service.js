@@ -49,7 +49,9 @@ const updateOne = model => async (req, res, next) => {
 
 const removeOne = model => async (req, res, next) => {
     try {
-        const deletedDoc = await model.findByIdAndDelete(req.params.id).exec();
+        const foundDoc = await model.findById(req.params.id).exec();
+        const deletedDoc = await foundDoc.remove();
+        //const deletedDoc = await model.findByIdAndDelete(req.params.id).exec();
         if (deletedDoc) {
             res.status(200).json({
                 message: 'document deleted'
