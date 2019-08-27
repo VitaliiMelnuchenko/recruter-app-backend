@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const questionController = require('../controllers/question.controller');
+const questionValidator = require('../validators/question.validator');
 
 router.route('/')
-.get(questionController.getQestions)
-.post(questionController.createQuestion);
+.get(questionController.getMany)
+.post(questionValidator, questionController.createOne);
 
 router.route('/:id')
-.get(questionController.getQuestionById)
-.put(questionController.updateQuestion)
-.delete(questionController.deleteQuestion);
+.get(questionController.getOne)
+.put(questionValidator, questionController.updateOne)
+.delete(questionController.removeOne);
 
 module.exports = router;
