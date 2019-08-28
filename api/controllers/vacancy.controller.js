@@ -5,7 +5,8 @@ const createOne = async (req, res, next) => {
     try {
         const newDoc = await Vacancy.create(req.body);
         const populatedData = await Vacancy.populate(newDoc, { path: 'questions', select: '-__v' });
-        res.status(201).json(populatedData);
+        const { __v, ...data } = populatedData._doc;
+        res.status(201).json(data);
     } catch(err) {
         next(err);
     }

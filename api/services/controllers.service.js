@@ -1,7 +1,8 @@
 const createOne = model => async (req, res, next) => {
     try {
         const newDoc = await model.create(req.body);
-        res.status(201).json(newDoc);
+        const { __v, ...Data } = newDoc._doc;
+        res.status(201).json(Data);
     } catch(err) {
         next(err);
     }
@@ -23,7 +24,7 @@ const getMany = model => async (req, res, next) => {
 const getOne = model => async (req, res, next) => {
     try {
         const documents = await model.find({ _id: req.params.id }).select('-__v').exec();
-        if (documents.length === 1) {
+        if (documents.length) {
             res.status(200).json(documents[0]);
         } else {
             res.status(400).json({ message: 'there is no document with given ID' });
