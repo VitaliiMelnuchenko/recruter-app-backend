@@ -22,9 +22,9 @@ const getMany = model => async (req, res, next) => {
 
 const getOne = model => async (req, res, next) => {
     try {
-        const document = await model.findById(req.params.id).select('-__v').exec();
-        if (document) {
-            res.status(200).json(document);
+        const documents = await model.find({ _id: req.params.id }).select('-__v').exec();
+        if (documents.length === 1) {
+            res.status(200).json(documents[0]);
         } else {
             res.status(400).json({ message: 'there is no document with given ID' });
         }
@@ -51,7 +51,6 @@ const removeOne = model => async (req, res, next) => {
     try {
         const foundDoc = await model.findById(req.params.id).exec();
         const deletedDoc = await foundDoc.remove();
-        //const deletedDoc = await model.findByIdAndDelete(req.params.id).exec();
         if (deletedDoc) {
             res.status(200).json({
                 message: 'document deleted'

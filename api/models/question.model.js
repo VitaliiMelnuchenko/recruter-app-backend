@@ -18,7 +18,7 @@ const QuestionSchema = new Schema({
 
 QuestionSchema.pre('remove', async function(next) {
     try {
-        await Vacancy.update(
+        await Vacancy.updateMany(
             { },
             { $pull: { questions: this._id } }
         ).exec();
