@@ -1,29 +1,50 @@
-const { Vacancy } = require('../models');
-const crudController = require('../services/controllers.service');
+const vacancyService = require('../services/vacancy.service');
 
-const createOne = async (req, res, next) => {
+const createVacancy = async (req, res, next) => {
+    const newVacancy = await vacancyService.createOne(req.body);
+    res.status(201).json(newVacancy);
+}
+
+const getVacancy = async (req, res, next) => {
     try {
-        const newDoc = await Vacancy.create(req.body);
-        const populatedData = await Vacancy.populate(newDoc, { path: 'questions', select: '-__v' });
-        const { __v, ...data } = populatedData._doc;
-        res.status(201).json(data);
+        const vacancies = await vacancyService.getMany();
+        res.status(200).json(vacancies);
     } catch(err) {
         next(err);
     }
 }
 
-const updateOne = async (req, res, next) => {
+const getVacancyById = async (req, res, next) => {
     try {
-        const updatedDoc = await Vacancy.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .select('-__v').populate('questions', '-__v').exec();
-        if (updatedDoc) {
-            res.status(200).json(updatedDoc);
-        } else {
-            res.status(400).json({ message: 'there is no document with given ID' });
-        }
+        const foundVacancy = await vacancyService.getOne(req.params.id);
+        res.status(200).json(foundVacancy);
     } catch(err) {
         next(err);
     }
 }
 
-module.exports = { ...crudController(Vacancy), createOne, updateOne };
+const updateVacancy = async (req, res, next) => {
+    try {
+        const updatedVacancy = await vacancyService.updateOne(req.params.id, req.body);
+        res.status(200).json(updatedVacancy);
+    } catch(err) {
+        next(err);
+    }
+}
+
+const deleteVacancy = async (req, res, next) => {
+    try {
+        const deletedVacancy = await vacancyService.removeOne(req.params.id);
+        res.status(204).json(deletedQuestion);
+    } catch(err) {
+        next(err);
+    }
+}
+
+module.exports = { 
+    createVacancy, 
+    getVacancy, 
+    getVacancyById, 
+    updateVacancy, 
+    deleteVacancy 
+};

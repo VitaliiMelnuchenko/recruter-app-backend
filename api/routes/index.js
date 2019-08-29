@@ -8,7 +8,7 @@ router.use('/questions', questionsRoutes);
 router.use('/vacancies', vacanciesRoutes);
 
 router.use((err, req, res, next) => {
-    res.status(500).json(err);
+    res.status(500).json(err.message);
 });
 
 module.exports = router;

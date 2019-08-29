@@ -1,8 +1,7 @@
 const createOne = model => async (req, res, next) => {
     try {
         const newDoc = await model.create(req.body);
-        const { __v, ...Data } = newDoc._doc;
-        res.status(201).json(Data);
+        res.status(201).json(newDoc);
     } catch(err) {
         next(err);
     }
@@ -10,7 +9,7 @@ const createOne = model => async (req, res, next) => {
 
 const getMany = model => async (req, res, next) => {
     try {
-        const documents = await model.find({}).select('-__v').exec();
+        const documents = await model.find({});
         if (documents.length) {
             res.status(200).json(documents);
         } else {
@@ -23,7 +22,7 @@ const getMany = model => async (req, res, next) => {
 
 const getOne = model => async (req, res, next) => {
     try {
-        const documents = await model.find({ _id: req.params.id }).select('-__v').exec();
+        const documents = await model.find({ _id: req.params.id });
         if (documents.length) {
             res.status(200).json(documents[0]);
         } else {
@@ -36,8 +35,7 @@ const getOne = model => async (req, res, next) => {
 
 const updateOne = model => async (req, res, next) => {
     try {
-        const updatedDoc = await model.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .select('-__v').exec();
+        const updatedDoc = await model.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (updatedDoc) {
             res.status(200).json(updatedDoc);
         } else {
@@ -50,7 +48,7 @@ const updateOne = model => async (req, res, next) => {
 
 const removeOne = model => async (req, res, next) => {
     try {
-        const foundDoc = await model.findById(req.params.id).exec();
+        const foundDoc = await model.findById(req.params.id);
         const deletedDoc = await foundDoc.remove();
         if (deletedDoc) {
             res.status(200).json({
