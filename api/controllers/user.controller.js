@@ -19,7 +19,7 @@ async function signin(req, res, next) {
         if (ticket && foundUser) {
             const token = foundUser.generateAuthToken();
             const { _id, ...userData } = foundUser._doc;
-            userData.photo = picture;
+            userData.photoUrl = picture;
             res.status(200).json({
                 user: userData,
                 accessToken: token
