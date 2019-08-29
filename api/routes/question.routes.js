@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const questionController = require('../controllers/question.controller');
-const questionValidator = require('../validators/question.validator');
+const questionValidator = require('../middlewares/validators/question.validator');
 
 router.route('/')
 .get(questionController.getMany)

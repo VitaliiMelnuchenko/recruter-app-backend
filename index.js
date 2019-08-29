@@ -19,6 +19,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', api);
 
+app.use('*', (req, res) => {
+   res.status(404).json({ message: 'Error 404: Not found' });
+});
+
 app.listen(3000, () => {
    console.log('server is running');
 });

@@ -1,6 +1,6 @@
 const MIN_LENGTH = 3;
 const Joi = require('@hapi/joi');
-const validator = require('../services/validators.service');
+const validator = require('../../services/validators.service');
 
 const schema = {
     title: Joi.string().min(MIN_LENGTH).required(),

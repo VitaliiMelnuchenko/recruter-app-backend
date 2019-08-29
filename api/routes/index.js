@@ -3,7 +3,9 @@ const router = express.Router();
 
 const questionsRoutes = require('./question.routes');
 const vacanciesRoutes = require('./vacancy.routes');
+const usersRoutes = require('./user.routes');
 
+router.use('/users', usersRoutes);
 router.use('/questions', questionsRoutes);
 router.use('/vacancies', vacanciesRoutes);
 

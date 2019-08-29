@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const vacancyController = require('../controllers/vacancy.controller');
-const vacancyValidator = require('../validators/vacancy.validator');
+const vacancyValidator = require('../middlewares/validators/vacancy.validator');
 
 router.route('/')
 .get(vacancyController.getMany)
