@@ -1,5 +1,4 @@
 const questionService = require('../services/question.service');
-const questionDT = require('../DTO/question.dto');
 
 const createQuestion = async (req, res, next) => {
     const newQuestion = await questionService.createOne(req.body);

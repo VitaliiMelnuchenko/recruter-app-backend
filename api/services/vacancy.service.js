@@ -1,10 +1,10 @@
 const { Vacancy } = require('../models');
-const vacancyDT = require('../DTO/vacancy.dto');
 
 const createOne = async newVacancy => {
     try {
         const newDoc = await Vacancy.create(newVacancy);
-        return newDoc;
+        const populatedDoc = await Vacancy.populate(newDoc, { path: 'questions' });
+        return populatedDoc;
     } catch(err) {
         return err;
     }
@@ -13,13 +13,8 @@ const createOne = async newVacancy => {
 const getMany = async () => {
     try {        
         const documents = await Vacancy.find({});
-        const populatedDocs = documents.map(async vacancy => {
-            const aaa = await vacancyDT(vacancy);
-            console.log(aaa);
-            return aaa;
-        });
-        console.log(populatedDocs);
-        return populatedDocs;
+        const populatedDoc = await Vacancy.populate(documents, { path: 'questions' });
+        return populatedDoc;
     } catch(err) {
         throw new Error(err);
     }
@@ -28,8 +23,9 @@ const getMany = async () => {
 const getOne = async (id) => {
     try {
         const document = await Vacancy.findById(id);
-        if (document) {
-            return document;
+        const populatedDoc = await Vacancy.populate(document, { path: 'questions' });
+        if (populatedDoc) {
+            return populatedDoc;
         } else {
             throw new Error('There is no document with given ID');
         }
@@ -41,8 +37,9 @@ const getOne = async (id) => {
 const updateOne = async (id, doc) => {
     try {
         const updatedDoc = await Vacancy.findByIdAndUpdate(id, doc, { new: true });
-        if (updatedDoc) {
-            return updatedDoc;
+        const populatedDoc = await Vacancy.populate(updatedDoc, { path: 'questions' });
+        if (populatedDoc) {
+            return populatedDoc;
         } else {
             throw new Error('There is no document with given ID');
         }

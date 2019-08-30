@@ -1,12 +1,10 @@
-const { Vacancy } = require('../models');
-
-module.exports = async (doc) => {
+module.exports = (doc) => {
 	const vacancy = {};
-	vacancy._id = (populatedDoc._id) ? populatedDoc._id : null;
-	vacancy.title = (populatedDoc.title) ? populatedDoc.title : null;
-	vacancy.description = (populatedDoc.description) ? populatedDoc.description : null;
-	vacancy.status = (populatedDoc.status) ? populatedDoc.status : null;
-	vacancy.questions = (populatedDoc.questions) ? populatedDoc.questions : null;
-	vacancy.type = (populatedDoc.type) ? populatedDoc.type : null;
+	vacancy._id = (doc._id) ? doc._id : null;
+	vacancy.title = (doc.title) ? doc.title : null;
+	vacancy.description = (doc.description) ? doc.description : null;
+	vacancy.status = (doc.status) ? doc.status : null;
+	vacancy.questions = (doc.questions) ? doc.questions : null;
+	vacancy.type = (doc.type) ? doc.type : null;
 	return vacancy;
 }
