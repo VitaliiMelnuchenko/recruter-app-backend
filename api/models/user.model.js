@@ -14,7 +14,7 @@ const UserSchema = new Schema({
     },
     role: { type: String, enum: ['admin', 'recruiter', 'reviewer', 'candidate'], default: 'candidate', required: true},
     isActive: { type: Boolean, default: false }
-});
+}, { versionKey: false });
 
 UserSchema.methods.generateAuthToken = function() {
     const token = jwt.sign(
