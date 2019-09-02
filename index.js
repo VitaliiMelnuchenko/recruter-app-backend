@@ -17,17 +17,17 @@ mongoose.set('useCreateIndex', true);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+   next();
+});
+
 app.use('/', api);
 
 app.use('*', (req, res) => {
    res.status(404).json({ message: 'Error 404: Not found' });
 });
-
-app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD");
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-   next();
- });
 
 app.listen(process.env.PORT, process.env.ID, () => {
    console.log('server is running');
