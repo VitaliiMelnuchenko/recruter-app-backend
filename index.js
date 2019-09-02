@@ -23,6 +23,12 @@ app.use('*', (req, res) => {
    res.status(404).json({ message: 'Error 404: Not found' });
 });
 
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
+   res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+   next();
+ });
+
 app.listen(process.env.PORT, process.env.ID, () => {
    console.log('server is running');
 });
