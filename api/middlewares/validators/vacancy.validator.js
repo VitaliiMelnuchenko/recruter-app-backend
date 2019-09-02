@@ -5,7 +5,7 @@ const validator = require('../../services/validators.service');
 const schema = {
     title: Joi.string().min(MIN_LENGTH).required(),
     description: Joi.string().min(MIN_LENGTH).required(),
-    status: Joi.string().required(),
+    status: Joi.string(),
     questions: Joi.array(),
     type: Joi.string().min(MIN_LENGTH).required()
 };
