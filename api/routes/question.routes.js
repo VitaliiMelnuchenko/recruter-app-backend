@@ -4,12 +4,12 @@ const questionController = require('../controllers/question.controller');
 const questionValidator = require('../middlewares/validators/question.validator');
 
 router.route('/')
-.get(questionController.getMany)
-.post(questionValidator, questionController.createOne);
+.get(questionController.getQuestions)
+.post(questionValidator, questionController.createQuestion);
 
 router.route('/:id')
-.get(questionController.getOne)
-.put(questionValidator, questionController.updateOne)
-.delete(questionController.removeOne);
+.get(questionController.getQuestionById)
+.put(questionValidator, questionController.updateQuestion)
+.delete(questionController.deleteQuestion);
 
 module.exports = router;

@@ -14,14 +14,14 @@ const QuestionSchema = new Schema({
     maxLength: { type: Number, required: true },
     //topics: [],
     level: { type: String, required: true },
-});
+}, { versionKey: false });
 
 QuestionSchema.pre('remove', async function(next) {
     try {
         await Vacancy.updateMany(
             { },
             { $pull: { questions: this._id } }
-        ).exec();
+        );
         next();
     } catch(err) {
         next(err)

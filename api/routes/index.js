@@ -8,9 +8,10 @@ const usersRoutes = require('./user.routes');
 router.use('/users', usersRoutes);
 router.use('/questions', questionsRoutes);
 router.use('/vacancies', vacanciesRoutes);
+router.use('/users', usersRoutes);
 
 router.use((err, req, res, next) => {
-    res.status(500).json(err);
+    res.status(500).json(err.message);
 });
 
 module.exports = router;
