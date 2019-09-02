@@ -12,7 +12,9 @@ const QuestionSchema = new Schema({
     type: { type: String, required: true },
     //options: [],
     maxLength: { type: Number, required: true },
-    //topics: [],
+    topics: [
+        { type: String }
+    ],
     level: { type: String, required: true },
 }, { versionKey: false });
 

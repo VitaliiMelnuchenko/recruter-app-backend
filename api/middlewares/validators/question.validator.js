@@ -8,7 +8,7 @@ const schema = {
     type: Joi.string().min(MIN_LENGTH).required(),
     // options:
     maxLength: Joi.number().required(),
-    // topics:
+    topics: Joi.array(),
     level: Joi.string().min(MIN_LENGTH).required()
 }
 
