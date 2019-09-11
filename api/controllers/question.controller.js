@@ -17,7 +17,7 @@ const getQuestions = async (req, res, next) => {
 const getQuestionById = async (req, res, next) => {
     try {
         const foundQuestion = await questionService.getOne(req.params.id);
-        res.status(200).json(questionDT(foundQuestion));
+        res.status(200).json(foundQuestion);
     } catch(err) {
         next(err);
     }
