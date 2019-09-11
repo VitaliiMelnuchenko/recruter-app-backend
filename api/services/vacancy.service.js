@@ -1,4 +1,6 @@
 const { Vacancy } = require('../models');
+const errorHandler = require('../../utils/errorHandler');
+const badRequestErr = errorHandler.badRequest('There is no document with given ID');
 
 const createOne = async newVacancy => {
     try {
@@ -8,7 +10,7 @@ const createOne = async newVacancy => {
     } catch(err) {
         return err;
     }
-}
+};
 
 const getMany = async () => {
     try {        
@@ -16,9 +18,9 @@ const getMany = async () => {
         const populatedDoc = await Vacancy.populate(documents, { path: 'questions' });
         return populatedDoc;
     } catch(err) {
-        throw new Error(err);
+        throw err;
     }
-}
+};
 
 const getOne = async (id) => {
     try {
@@ -27,12 +29,12 @@ const getOne = async (id) => {
         if (populatedDoc) {
             return populatedDoc;
         } else {
-            throw new Error('There is no document with given ID');
+            throw badRequestErr;
         }
     } catch(err) {
-        throw new Error(err);
+        throw err;
     }
-}
+};
 
 const updateOne = async (id, doc) => {
     try {
@@ -41,12 +43,12 @@ const updateOne = async (id, doc) => {
         if (populatedDoc) {
             return populatedDoc;
         } else {
-            throw new Error('There is no document with given ID');
+            throw badRequestErr;
         }
     } catch(err) {
-        throw new Error(err);
+        throw err;
     }
-}
+};
 
 const removeOne = async (id) => {
     try {
@@ -55,11 +57,11 @@ const removeOne = async (id) => {
         if (deletedDoc) {
             return deletedDoc;
         } else {
-            throw new Error('There is no document with given ID');
+            throw badRequestErr;
         }
     } catch(err) {
-        throw new Error(err);
+        throw err;
     }
-}
+};
 
 module.exports = { createOne, getMany, getOne, updateOne, removeOne }

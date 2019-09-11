@@ -26,10 +26,6 @@ app.use(function(req, res, next) {
 
 app.use('/', api);
 
-app.use('*', (req, res) => {
-   res.status(404).json({ message: 'Error 404: Not found' });
-});
-
 app.listen(process.env.PORT, process.env.ID, () => {
    console.log('server is running');
 });

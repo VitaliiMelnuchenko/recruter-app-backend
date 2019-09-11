@@ -1,0 +1,7 @@
+module.exports = {
+    MIN_LENGTH: 3, 
+    MAX_TITLE_LENGTH: 100, 
+    MAX_DESC_LENGTH: 500, 
+    MAX_TOPIC_LENGTH: 20,
+    MAX_COMMENT_LENGTH: 500
+};

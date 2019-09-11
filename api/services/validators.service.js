@@ -1,15 +1,14 @@
 const Joi = require('@hapi/joi');
+const errorHandler = require('../../utils/errorHandler');
 
-module.exports = schema => (req, res, next) => {
+module.exports = schema => (data) => {
     try {
-        const result = Joi.validate(req.body, schema);
-        if ((result || { error: true }).error) {
-            return res.status(400).json((((result || {})
-            .error || []).details[0] || {}).message || 'Validation failed');
-        } else {
-            next();
+        const result = Joi.validate(data, schema);
+        if (result.error) {
+            const error = errorHandler.invalidJoi(result.error);
+            throw error
         }
     } catch(err) {
-        next(err);
+        throw err;
     }
 };
