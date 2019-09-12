@@ -13,6 +13,7 @@ const createVacancy = async (req, res, next) => {
         const result = vacancyDT(newVacancy);
         res.status(201).json(result);
     } catch(err) {
+        res.satus(500).json(req.local.user._id);
         next(err);
     }
 };

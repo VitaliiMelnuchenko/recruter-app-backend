@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const questionController = require('../controllers/question.controller');
+const checkAuth = require('../middlewares/check-auth');
 
 router.route('/')
-.get(questionController.getQuestions)
-.post(questionController.createQuestion);
+.get(checkAuth, questionController.getQuestions)
+.post(checkAuth, questionController.createQuestion);
 
 router.route('/:id')
-.get(questionController.getQuestionById)
-.put(questionController.updateQuestion)
-.delete(questionController.deleteQuestion);
+.get(checkAuth ,questionController.getQuestionById)
+.put(checkAuth, questionController.updateQuestion)
+.delete(checkAuth, questionController.deleteQuestion);
 
 module.exports = router;

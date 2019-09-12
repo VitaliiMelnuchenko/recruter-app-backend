@@ -8,9 +8,9 @@ const usersRoutes = require('./user.routes');
 const applicationRoutes = require('./application.routes');
 
 router.use('/users', usersRoutes);
-router.use('/questions', checkAuth, questionsRoutes);
-router.use('/vacancies', checkAuth, vacanciesRoutes);
-router.use('/applications', checkAuth, applicationRoutes);
+router.use('/questions', questionsRoutes);
+router.use('/vacancies', vacanciesRoutes);
+router.use('/applications', applicationRoutes);
 
 router.use((err, req, res, next) => {
     res.status(err.status || 500).json(err.message);

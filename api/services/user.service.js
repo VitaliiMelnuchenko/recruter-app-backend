@@ -30,14 +30,10 @@ const fingUser = async data => {
 
 const google_auth = async (google_token) => {
     try {
-        try {
-            const ticket = await client.verifyIdToken({
-                idToken: google_token,
-                audience: process.env.CLIENT_ID
-            });
-        } catch(err) {
-            throw err401;
-        }
+        const ticket = await client.verifyIdToken({
+            idToken: google_token,
+            audience: process.env.CLIENT_ID
+        }).catch(() => { throw err401 });
         const { email = '', picture = '' } = ticket.getPayload(); 
         const foundUser = await User.findOne({ email: email });
         if (ticket && foundUser && foundUser.isActive) {
