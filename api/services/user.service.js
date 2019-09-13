@@ -19,7 +19,7 @@ const createUser = async data => {
     }
 };
 
-const fingUser = async data => {
+const findUser = async data => {
     try {
         const user = await User.findOne(data);
         return user;
@@ -38,7 +38,7 @@ const google_auth = async (google_token) => {
         const foundUser = await User.findOne({ email: email });
         if (ticket && foundUser && foundUser.isActive) {
             const token = foundUser.generateAuthToken(picture);
-            const { _id, ...userData } = foundUser._doc;
+            const { ...userData } = foundUser._doc;
             userData.photoUrl = picture;
             return {
                 user: userData,
@@ -90,7 +90,7 @@ const sendVerificationCode = async (email, code, vacancy) => {
 
 const inviteCandidate = async (candidateData, vacancyId) => {
     try {
-        let candidate = await fingUser(candidateData);
+        let candidate = await findUser(candidateData);
         if (!candidate) {
             candidate = await createUser(candidateData);
         }

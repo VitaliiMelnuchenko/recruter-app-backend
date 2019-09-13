@@ -5,7 +5,8 @@ const badRequestErr = errorHandler.badRequest('There is no document with given I
 const createOne = async newQuestion => {
     try {
         const newDoc = await Question.create(newQuestion);
-        return newDoc;
+        const populatedDoc = await Question.populate(newDoc, { path: 'topics' })
+        return populatedDoc;
     } catch(err) {
         throw err;
     }
@@ -13,7 +14,7 @@ const createOne = async newQuestion => {
 
 const getMany = async () => {
     try {        
-        const documents = await Question.find({});
+        const documents = await Question.find({}).populate('topics');
         return documents;
     } catch(err) {
         throw err;
@@ -22,7 +23,7 @@ const getMany = async () => {
 
 const getOne = async (id) => {
     try {
-        const document = await Question.findById(id);
+        const document = await Question.findById(id).populate('topics');
         if (document) {
             return document;
         } else {
@@ -35,7 +36,7 @@ const getOne = async (id) => {
 
 const updateOne = async (id, doc) => {
     try {
-        const updatedDoc = await Question.findByIdAndUpdate(id, doc, { new: true });
+        const updatedDoc = await Question.findByIdAndUpdate(id, doc, { new: true }).populate('topics');
         if (updatedDoc) {
             return updatedDoc;
         } else {

@@ -66,7 +66,6 @@ applicationSchema.post('save', async (doc, next) => {
                 finishedAt: (question.finishedAt) ? question.finishedAt : null
             }
         });
-        //const result = await doc.save();
         next();
     } catch(err) {
         next(err);
