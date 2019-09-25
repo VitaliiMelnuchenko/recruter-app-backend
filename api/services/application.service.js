@@ -1,66 +1,102 @@
-const { Application } = require('../models');
+const { Application, Vacancy, Question } = require('../models');
 const vacancyService = require('./vacancy.service');
+const errorHandler = require('../../utils/errorHandler');
+const badRequestErr = errorHandler.badRequest('There is no document with given ID');
 
-const createOne = async (data) => {
+const createOne = async data => {
     try {
+        const copyQuestion = question => {
+            return {
+                type: question.type ? question.type : null,
+                question: question._id ? question._id : null
+            };
+        };
         const vacancy = await vacancyService.getOne(data.vacancy);
         if (vacancy.status !== 'active') {
             throw new Error('Vacancy is not active');
         }
         const newDoc = await Application.create(data);
-        return newDoc;
-    } catch(err) {
-        throw new Error(err);
+        const populateVacancy = await Vacancy.populate(newDoc, {
+            path: 'vacancy'
+        });
+        const populateVcacncyQuestions = await Question.populate(
+            newDoc.vacancy,
+            { path: 'questions' }
+        );
+        newDoc.questions = populateVcacncyQuestions.questions.map(copyQuestion);
+        const filledApplication = await newDoc.save();
+        const populateQuestions = await Question.populate(
+            filledApplication.questions,
+            { path: 'question' }
+        );
+        return filledApplication;
+    } catch (err) {
+        throw err;
     }
 };
 
-const getMany = async () => {
+const getMany = async (filter = {}) => {
     try {
-        const docs = await Application.find({});
+        const docs = await Application.find(filter)
+            .populate({
+                path: 'vacancy',
+                populate: { path: 'questions' }
+            })
+            .populate('questions.question');
         return docs;
-    } catch(err) {
-        throw new Error(err);
+    } catch (err) {
+        throw err;
     }
 };
 
-const getOne = async (id) => {
+const getOne = async id => {
     try {
-        const doc = await Application.findById(id);
+        const doc = await Application.findById(id)
+            .populate({
+                path: 'vacancy',
+                populate: { path: 'questions' }
+            })
+            .populate('questions.question');
         if (doc) {
             return doc;
         } else {
-            throw new Error('There is no doc with given ID');
+            throw badRequestErr;
         }
-    } catch(err) {
-        throw new Error(err);
+    } catch (err) {
+        throw err;
     }
 };
 
 const updateOne = async (id, data) => {
     try {
-        const updatedDoc = Application.findByIdAndUpdate(id, data, { new: true });
-        if (updatedDoc) {
-            return updatedDoc;
+        const updatedApp = await Application.findByIdAndUpdate(id, data, {
+            new: true
+        })
+            .populate({
+                path: 'vacancy',
+                populate: { path: 'questions' }
+            })
+            .populate('questions.question');
+        if (updatedApp) {
+            return updatedApp;
         } else {
-            throw new Error('There is no doc with given ID');
+            throw badRequestErr;
         }
-    } catch(err) {
-        throw new Error(err);
+    } catch (err) {
+        throw err;
     }
 };
 
-const removeOne = async (id) => {
+const remove = async appIdList => {
     try {
-        const foundDoc = await Application.findById(id);
-        const deletedDoc = await foundDoc.remove();
-        if (deletedDoc) {
-            return deletedDoc;
-        } else {
-            throw new Error('There is no document with given ID');
-        }
-    } catch(err) {
-        throw new Error(err);
+        if (!Array.isArray(appIdList)) throw errorHandler.badRequest();
+        const deletedApps = await Application.deleteMany({
+            _id: { $in: appIdList }
+        });
+        return deletedApps;
+    } catch (err) {
+        throw err;
     }
 };
 
-module.exports = { createOne, getMany, getOne, updateOne, removeOne }
+module.exports = { createOne, getMany, getOne, updateOne, remove };

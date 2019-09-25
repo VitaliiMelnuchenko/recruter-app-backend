@@ -5,23 +5,22 @@ const badRequestErr = errorHandler.badRequest('There is no document with given I
 const createOne = async newQuestion => {
     try {
         const newDoc = await Question.create(newQuestion);
-        const populatedDoc = await Question.populate(newDoc, { path: 'topics' })
-        return populatedDoc;
-    } catch(err) {
+        return newDoc;
+    } catch (err) {
         throw err;
     }
 };
 
 const getMany = async () => {
-    try {        
-        const documents = await Question.find({}).populate('topics');
+    try {
+        const documents = await Question.find({});
         return documents;
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 };
 
-const getOne = async (id) => {
+const getOne = async id => {
     try {
         const document = await Question.findById(id).populate('topics');
         if (document) {
@@ -29,25 +28,27 @@ const getOne = async (id) => {
         } else {
             throw badRequestErr;
         }
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 };
 
 const updateOne = async (id, doc) => {
     try {
-        const updatedDoc = await Question.findByIdAndUpdate(id, doc, { new: true }).populate('topics');
+        const updatedDoc = await Question.findByIdAndUpdate(id, doc, {
+            new: true
+        });
         if (updatedDoc) {
             return updatedDoc;
         } else {
             throw badRequestErr;
         }
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 };
 
-const removeOne = async (id) => {
+const removeOne = async id => {
     try {
         const foundDoc = await Question.findById(id);
         if (foundDoc) {
@@ -56,7 +57,7 @@ const removeOne = async (id) => {
         } else {
             throw badRequestErr;
         }
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 };

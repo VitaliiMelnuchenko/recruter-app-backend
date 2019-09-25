@@ -5,52 +5,62 @@ const badRequestErr = errorHandler.badRequest('There is no document with given I
 const createOne = async newVacancy => {
     try {
         const newDoc = await Vacancy.create(newVacancy);
-        const populatedDoc = await Vacancy.populate(newDoc, { path: 'questions' });
+        const populatedDoc = await Vacancy.populate(newDoc, {
+            path: 'questions'
+        });
         return populatedDoc;
-    } catch(err) {
+    } catch (err) {
         return err;
     }
 };
 
 const getMany = async () => {
-    try {        
+    try {
         const documents = await Vacancy.find({});
-        const populatedDoc = await Vacancy.populate(documents, { path: 'questions' });
+        const populatedDoc = await Vacancy.populate(documents, {
+            path: 'questions'
+        });
         return populatedDoc;
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 };
 
-const getOne = async (id) => {
+const getOne = async id => {
     try {
         const document = await Vacancy.findById(id);
-        const populatedDoc = await Vacancy.populate(document, { path: 'questions' });
+        const populatedDoc = await Vacancy.populate(document, {
+            path: 'questions'
+        });
         if (populatedDoc) {
             return populatedDoc;
         } else {
             throw badRequestErr;
         }
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 };
 
 const updateOne = async (id, doc) => {
     try {
-        const updatedDoc = await Vacancy.findByIdAndUpdate(id, doc, { new: true });
-        const populatedDoc = await Vacancy.populate(updatedDoc, { path: 'questions' });
+        const updatedDoc = await Vacancy.findByIdAndUpdate(id, doc, {
+            new: true
+        });
+        const populatedDoc = await Vacancy.populate(updatedDoc, {
+            path: 'questions'
+        });
         if (populatedDoc) {
             return populatedDoc;
         } else {
             throw badRequestErr;
         }
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 };
 
-const removeOne = async (id) => {
+const removeOne = async id => {
     try {
         const foundDoc = await Vacancy.findById(id);
         const deletedDoc = await foundDoc.remove();
@@ -59,9 +69,9 @@ const removeOne = async (id) => {
         } else {
             throw badRequestErr;
         }
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 };
 
-module.exports = { createOne, getMany, getOne, updateOne, removeOne }
+module.exports = { createOne, getMany, getOne, updateOne, removeOne };

@@ -1,17 +1,16 @@
 const Joi = require('@hapi/joi');
 const validator = require('../services/validators.service');
+const { MONGOOSE_ID_LENGTH } = require('../CONSTANTS');
 
 const schema = {
-    candidate: Joi.object().required(),
-    vacancy: Joi.object().required(),
-    reviewer: Joi.object(),
-    questions: Joi.array().required(),
-    startedAt: Joi.date(),
-    completedAt: Joi.date(),
-    evaluetedAt: Joi.date(),
-    status: Joi.string().valid('invited', 'in progress', 'completed', 'evaluated'),
-    score: joi.number(),
-    comments: Joi.array()
+    candidate: Joi.string()
+        .alphanum()
+        .length(MONGOOSE_ID_LENGTH)
+        .required(),
+    vacancy: Joi.string()
+        .alphanum()
+        .length(MONGOOSE_ID_LENGTH)
+        .required()
 };
 
 module.exports = validator(schema);

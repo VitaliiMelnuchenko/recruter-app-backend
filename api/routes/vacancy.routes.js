@@ -1,15 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const vacancyController = require('../controllers/vacancy.controller');
-const checkAuth = require('../middlewares/check-auth');
+const requireRoles = require('../middlewares/check-role');
+const { Vacancy } = require('../models');
+const checkAuthor = require('../middlewares/check-author');
+const checkVacancyAuthor = checkAuthor(Vacancy);
+const { ADMIN, RECRUITER } = require('../CONSTANTS');
 
-router.route('/')
-.get(checkAuth, vacancyController.getVacancy)
-.post(checkAuth, vacancyController.createVacancy);
+router.use(requireRoles(ADMIN, RECRUITER));
 
-router.route('/:id')
-.get(checkAuth, vacancyController.getVacancyById)
-.put(checkAuth, vacancyController.updateVacancy)
-.delete(checkAuth, vacancyController.deleteVacancy);
+router
+    .route('/')
+    .get(vacancyController.getVacancy)
+    .post(vacancyController.createVacancy);
+
+router
+    .route('/:id')
+    .get(vacancyController.getVacancyById)
+    .put(checkVacancyAuthor, vacancyController.updateVacancy)
+    .delete(checkVacancyAuthor, vacancyController.deleteVacancy);
+
+router.get('/:id/applications', vacancyController.getVacancyApps);
 
 module.exports = router;
