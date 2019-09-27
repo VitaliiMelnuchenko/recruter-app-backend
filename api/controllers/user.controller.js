@@ -55,6 +55,10 @@ const inviteCandidate = async (req, res, next) => {
         validateCandidateInvitation(req.body.candidate);
         const userData = req.body.candidate;
         const vacancyId = req.body.vacancy;
+        const vacancy = await vacancyService.getOne(vacancyId);
+        if (vacancy.status !== 'active') {
+            throw errorHandler.badRequest('Vacancy is not active');
+        }
         let user = await userService.findUser({ email: userData.email });
         if (user && user.role !== CANDIDATE) throw errorHandler.badRequest();
         if (!user) user = await userService.createUser(userData);
@@ -65,7 +69,6 @@ const inviteCandidate = async (req, res, next) => {
         };
         validateApp(appData);
         await applicationService.createOne(appData);
-        const vacancy = await vacancyService.getOne(vacancyId);
         await userService.sendInvite(
             user.role,
             user.email,
@@ -95,7 +98,7 @@ const inviteReviewer = async (req, res, next) => {
 
 const activateUser = async (req, res, next) => {
     try {
-        await userService.activateUser(req.body.code);
+        await userService.activateUser(req.body.token);
         res.status(200).json({ message: 'user has been activated' });
     } catch (err) {
         next(err);

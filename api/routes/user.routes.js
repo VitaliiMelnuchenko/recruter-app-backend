@@ -7,6 +7,8 @@ const { ADMIN, RECRUITER } = require('../CONSTANTS');
 
 router.post('/auth', userController.signin);
 
+router.post('/confirm', userController.activateUser);
+
 router.use(checkAuth);
 router.post(
     '/invite',
@@ -19,8 +21,6 @@ router.post(
     requireRoles(ADMIN),
     userController.inviteReviewer
 );
-
-router.post('/confirm', userController.activateUser);
 
 router.post(
     '/filter',

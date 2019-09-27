@@ -5,7 +5,7 @@ const requireRoles = require('../middlewares/check-role');
 const { ADMIN, RECRUITER, REVIEWER, CANDIDATE } = require('../CONSTANTS');
 
 router
-    .route('')
+    .route('/')
     .get(
         requireRoles(ADMIN, RECRUITER, REVIEWER),
         applicationController.getApplications
@@ -17,10 +17,7 @@ router
 
 router
     .route('/:id')
-    .get(
-        requireRoles(RECRUITER, ADMIN, CANDIDATE, REVIEWER),
-        applicationController.getApplicationsById
-    )
+    .get(applicationController.getApplicationsById)
     .patch(requireRoles(ADMIN), applicationController.updateApplication);
 
 router.post(

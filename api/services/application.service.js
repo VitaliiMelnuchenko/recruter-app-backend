@@ -11,10 +11,6 @@ const createOne = async data => {
                 question: question._id ? question._id : null
             };
         };
-        const vacancy = await vacancyService.getOne(data.vacancy);
-        if (vacancy.status !== 'active') {
-            throw new Error('Vacancy is not active');
-        }
         const newDoc = await Application.create(data);
         const populateVacancy = await Vacancy.populate(newDoc, {
             path: 'vacancy'
@@ -25,10 +21,6 @@ const createOne = async data => {
         );
         newDoc.questions = populateVcacncyQuestions.questions.map(copyQuestion);
         const filledApplication = await newDoc.save();
-        const populateQuestions = await Question.populate(
-            filledApplication.questions,
-            { path: 'question' }
-        );
         return filledApplication;
     } catch (err) {
         throw err;
@@ -42,7 +34,7 @@ const getMany = async (filter = {}) => {
                 path: 'vacancy',
                 populate: { path: 'questions' }
             })
-            .populate('questions.question');
+            .populate('questions.question candidate reviewer');
         return docs;
     } catch (err) {
         throw err;
@@ -56,7 +48,7 @@ const getOne = async id => {
                 path: 'vacancy',
                 populate: { path: 'questions' }
             })
-            .populate('questions.question');
+            .populate('questions.question candidate reviewer');
         if (doc) {
             return doc;
         } else {
@@ -76,7 +68,7 @@ const updateOne = async (id, data) => {
                 path: 'vacancy',
                 populate: { path: 'questions' }
             })
-            .populate('questions.question');
+            .populate('questions.question candidate reviewer');
         if (updatedApp) {
             return updatedApp;
         } else {

@@ -82,7 +82,7 @@ const google_auth = async google_token => {
         const foundUser = await User.findOne({ email: email });
         if (ticket && foundUser && foundUser.isActive) {
             const token = foundUser.generateAuthToken(picture);
-            const { _id, ...userData } = foundUser._doc;
+            const { ...userData } = foundUser._doc;
             userData.photoUrl = picture;
             return {
                 user: userData,

@@ -25,7 +25,7 @@ const getVars = async (req, res, next) => {
     try {
         const systenVarName = getVarNameFormUrl(req.url);
         const systemVars = await systemVarsSeervice.getMany(systenVarName);
-        res.status(201).json({ vars: systemVars });
+        res.status(201).json(systemVars);
     } catch (err) {
         next(err);
     }
